@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxsys — AI Transformation Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f4f6fb;--white:#ffffff;--surface:#eef0f7;--border:#dde1ef;
+  --ink:#0f1120;--ink2:#3a3f58;--ink3:#6b7194;
+  --purple:#5b21b6;--purple-lt:#ede9fe;--purple-md:#7c3aed;
+  --cyan:#0e7490;--cyan-lt:#cffafe;--cyan-md:#06b6d4;
+  --amber:#b45309;--amber-lt:#fef3c7;--amber-md:#f59e0b;
+  --green:#065f46;--green-lt:#d1fae5;--green-md:#10b981;
+  --red:#991b1b;--red-lt:#fee2e2;--red-md:#ef4444;
+  --pink:#9d174d;--pink-lt:#fce7f3;--pink-md:#ec4899;
+  --nav-w:240px;--radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Manrope',sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:var(--nav-w);height:100vh;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:28px 0;z-index:100;overflow-y:auto;}
+.nav-brand{padding:0 24px 28px;border-bottom:1px solid var(--border);}
+.nav-brand-name{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:0px;}
+.nav-brand-name span{color:var(--purple-md);}
+.nav-brand-sub{font-size:11px;color:var(--ink3);margin-top:3px;font-family:'Fira Code',monospace;}
+.nav-links{list-style:none;padding:20px 0;flex:1;}
+.nav-links li a{display:flex;align-items:center;gap:10px;padding:9px 24px;font-size:13px;font-weight:600;color:var(--ink3);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+.nav-links li a:hover,.nav-links li a.active{color:var(--purple-md);background:var(--purple-lt);border-left-color:var(--purple-md);}
+.nav-num{font-family:'Fira Code',monospace;font-size:10px;color:var(--ink3);opacity:.6;min-width:18px;}
+.nav-footer{padding:20px 24px 0;border-top:1px solid var(--border);font-size:11px;color:var(--ink3);font-family:'Fira Code',monospace;line-height:1.6;}
+
+/* MAIN */
+main{margin-left:var(--nav-w);min-height:100vh;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1e1144 0%,#2d1b69 50%,#0c4a6e 100%);padding:80px 72px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(124,58,237,.25) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(6,182,212,.15) 0%,transparent 50%);pointer-events:none;}
+.hero-eyebrow{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:20px;position:relative;z-index:1;}
+.hero h1{font-size:clamp(32px,4.5vw,58px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px;position:relative;z-index:1;}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#a78bfa,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-desc{font-size:16px;color:rgba(255,255,255,.65);max-width:560px;line-height:1.8;position:relative;z-index:1;margin-bottom:40px;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:1;}
+.meta-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:6px 16px;font-size:12px;color:rgba(255,255,255,.8);font-weight:600;display:flex;align-items:center;gap:6px;}
+.meta-pill span{opacity:.5;font-size:10px;}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--white);border-bottom:1px solid var(--border);}
+.kpi-cell{padding:28px 32px;border-right:1px solid var(--border);text-align:center;}
+.kpi-cell:last-child{border-right:none;}
+.kpi-num{font-size:38px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:6px;}
+.kpi-cell:nth-child(1) .kpi-num{color:var(--purple-md);}
+.kpi-cell:nth-child(2) .kpi-num{color:var(--cyan-md);}
+.kpi-cell:nth-child(3) .kpi-num{color:var(--green-md);}
+.kpi-cell:nth-child(4) .kpi-num{color:var(--amber-md);}
+.kpi-label{font-size:12px;color:var(--ink3);font-weight:500;line-height:1.4;}
+
+/* SECTIONS */
+.page-section{padding:64px 72px;border-bottom:1px solid var(--border);}
+.section-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:40px;}
+.section-badge{background:var(--purple-lt);color:var(--purple);font-family:'Fira Code',monospace;font-size:10px;font-weight:500;letter-spacing:2px;padding:5px 12px;border-radius:100px;white-space:nowrap;margin-top:6px;border:1px solid rgba(91,33,182,.15);}
+.section-title-group h2{font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.75px;line-height:1.2;margin-bottom:10px;}
+.section-title-group p{font-size:15px;color:var(--ink3);max-width:640px;line-height:1.75;}
+
+/* MANDATE QUOTE */
+.mandate-quote{background:linear-gradient(135deg,var(--purple-lt) 0%,#e0f2fe 100%);border-left:4px solid var(--purple-md);border-radius:0 var(--radius) var(--radius) 0;padding:36px 40px;margin:32px 0;position:relative;}
+.mandate-quote::before{content:'"';position:absolute;top:8px;left:24px;font-size:80px;color:var(--purple-md);opacity:.15;line-height:1;font-family:Georgia,serif;}
+.mandate-quote blockquote{font-size:clamp(16px,2vw,21px);font-weight:600;color:var(--ink);line-height:1.6;font-style:italic;position:relative;z-index:1;}
+.mandate-quote cite{display:block;margin-top:14px;font-family:'Fira Code',monospace;font-size:11px;color:var(--purple);font-style:normal;letter-spacing:1px;}
+
+/* PHASES */
+.phases{display:flex;flex-direction:column;gap:0;}
+.phase-card{display:grid;grid-template-columns:200px 1fr;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;transition:box-shadow .2s;}
+.phase-card:hover{box-shadow:0 4px 24px rgba(91,33,182,.1);}
+.phase-sidebar{padding:28px 24px;display:flex;flex-direction:column;gap:12px;border-right:1px solid var(--border);}
+.phase-card:nth-child(1) .phase-sidebar{background:var(--purple-lt);border-right-color:rgba(91,33,182,.12);}
+.phase-card:nth-child(2) .phase-sidebar{background:var(--cyan-lt);border-right-color:rgba(14,116,144,.12);}
+.phase-card:nth-child(3) .phase-sidebar{background:var(--green-lt);border-right-color:rgba(6,95,70,.12);}
+.phase-card:nth-child(4) .phase-sidebar{background:var(--amber-lt);border-right-color:rgba(180,83,9,.12);}
+.phase-card:nth-child(5) .phase-sidebar{background:var(--pink-lt);border-right-color:rgba(157,23,77,.12);}
+.phase-num-bubble{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;}
+.phase-card:nth-child(1) .phase-num-bubble{background:var(--purple-md);}
+.phase-card:nth-child(2) .phase-num-bubble{background:var(--cyan-md);}
+.phase-card:nth-child(3) .phase-num-bubble{background:var(--green-md);}
+.phase-card:nth-child(4) .phase-num-bubble{background:var(--amber-md);}
+.phase-card:nth-child(5) .phase-num-bubble{background:var(--pink-md);}
+.phase-timing{font-family:'Fira Code',monospace;font-size:11px;font-weight:500;line-height:1.5;}
+.phase-card:nth-child(1) .phase-timing{color:var(--purple);}
+.phase-card:nth-child(2) .phase-timing{color:var(--cyan);}
+.phase-card:nth-child(3) .phase-timing{color:var(--green);}
+.phase-card:nth-child(4) .phase-timing{color:var(--amber);}
+.phase-card:nth-child(5) .phase-timing{color:var(--pink);}
+.phase-owner{font-size:11px;color:var(--ink3);font-weight:500;line-height:1.4;}
+.phase-body{padding:28px 32px;}
+.phase-title{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.3px;margin-bottom:8px;}
+.phase-desc{font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:20px;}
+.phase-steps{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.phase-steps li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink2);line-height:1.6;}
+.step-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;font-weight:700;color:#fff;}
+.phase-card:nth-child(1) .step-dot{background:var(--purple-md);}
+.phase-card:nth-child(2) .step-dot{background:var(--cyan-md);}
+.phase-card:nth-child(3) .step-dot{background:var(--green-md);}
+.phase-card:nth-child(4) .step-dot{background:var(--amber-md);}
+.phase-card:nth-child(5) .step-dot{background:var(--pink-md);}
+
+/* TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px;}
+.tool-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.tool-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.08);transform:translateY(-2px);}
+.tool-card-header{padding:18px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+.tool-icon{font-size:24px;line-height:1;}
+.tool-dept-name{font-size:14px;font-weight:700;color:var(--ink);}
+.tool-dept-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;margin-left:auto;}
+.tool-card.design .tool-card-header{border-top:3px solid var(--pink-md);}
+.tool-card.design .tool-dept-tag{background:var(--pink-lt);color:var(--pink);}
+.tool-card.tech .tool-card-header{border-top:3px solid var(--cyan-md);}
+.tool-card.tech .tool-dept-tag{background:var(--cyan-lt);color:var(--cyan);}
+.tool-card.product .tool-card-header{border-top:3px solid var(--green-md);}
+.tool-card.product .tool-dept-tag{background:var(--green-lt);color:var(--green);}
+.tool-card.commercial .tool-card-header{border-top:3px solid var(--amber-md);}
+.tool-card.commercial .tool-dept-tag{background:var(--amber-lt);color:var(--amber);}
+.tool-list-body{padding:14px 20px 18px;}
+.tool-item{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid var(--surface);font-size:13px;}
+.tool-item:last-child{border-bottom:none;}
+.tool-item-name{font-weight:700;color:var(--ink);white-space:nowrap;}
+.tool-item-desc{color:var(--ink3);font-size:12px;}
+
+/* CALLOUT */
+.callout{background:var(--amber-lt);border:1px solid rgba(245,158,11,.3);border-left:4px solid var(--amber-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:18px 24px;margin-top:24px;font-size:14px;color:var(--amber);line-height:1.7;}
+.callout strong{color:var(--amber);font-weight:700;}
+
+/* RESISTANCE */
+.resistance-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.resistance-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.resistance-objection{background:var(--red-lt);padding:14px 20px;font-size:12px;font-weight:700;color:var(--red);font-family:'Fira Code',monospace;border-bottom:1px solid rgba(239,68,68,.15);display:flex;align-items:center;gap:8px;}
+.resistance-objection::before{content:'!';width:18px;height:18px;background:var(--red-md);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:'Manrope',sans-serif;flex-shrink:0;}
+.resistance-reframe{padding:16px 20px;font-size:13px;color:var(--ink2);line-height:1.7;}
+.resistance-reframe strong{color:var(--ink);font-weight:700;}
+
+/* GOVERNANCE */
+.gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.gov-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.gov-card-header{padding:14px 20px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.gov-card:nth-child(1) .gov-card-header{background:var(--purple-lt);color:var(--purple);border-bottom:1px solid rgba(91,33,182,.12);}
+.gov-card:nth-child(2) .gov-card-header{background:var(--cyan-lt);color:var(--cyan);border-bottom:1px solid rgba(14,116,144,.12);}
+.gov-card:nth-child(3) .gov-card-header{background:var(--green-lt);color:var(--green);border-bottom:1px solid rgba(6,95,70,.12);}
+.gov-card:nth-child(4) .gov-card-header{background:var(--amber-lt);color:var(--amber);border-bottom:1px solid rgba(180,83,9,.12);}
+.gov-freq{margin-left:auto;font-family:'Fira Code',monospace;font-size:10px;opacity:.7;font-weight:400;}
+.gov-card ul{list-style:none;padding:14px 20px 18px;display:flex;flex-direction:column;gap:7px;}
+.gov-card ul li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink2);line-height:1.5;}
+.gov-card ul li::before{content:'✓';font-size:11px;font-weight:700;margin-top:2px;flex-shrink:0;}
+.gov-card:nth-child(1) ul li::before{color:var(--purple-md);}
+.gov-card:nth-child(2) ul li::before{color:var(--cyan-md);}
+.gov-card:nth-child(3) ul li::before{color:var(--green-md);}
+.gov-card:nth-child(4) ul li::before{color:var(--amber-md);}
+
+/* CLOSING */
+.closing-cta{background:linear-gradient(135deg,#1e1144 0%,#2d1b69 60%,#0c4a6e 100%);border-radius:var(--radius);padding:56px;margin-top:40px;text-align:center;position:relative;overflow:hidden;}
+.closing-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(167,139,250,.15) 0%,transparent 70%);}
+.closing-cta blockquote{font-size:clamp(18px,2.5vw,26px);font-weight:700;color:#fff;line-height:1.5;max-width:700px;margin:0 auto 20px;position:relative;z-index:1;}
+.closing-cta cite{font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,255,255,.4);letter-spacing:2px;font-style:normal;position:relative;z-index:1;}
+
+/* FOOTER */
+footer{background:var(--white);border-top:1px solid var(--border);padding:28px 72px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.footer-brand{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.3px;}
+.footer-brand span{color:var(--purple-md);}
+.footer-note{font-family:'Fira Code',monospace;font-size:11px;color:var(--ink3);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  :root{--nav-w:0px;}
+  nav{display:none;}
+  main{margin-left:0;}
+  .hero,.page-section{padding:40px 24px;}
+  .kpi-strip{grid-template-columns:repeat(2,1fr);}
+  .phase-card{grid-template-columns:1fr;}
+  .phase-sidebar{border-right:none;border-bottom:1px solid var(--border);flex-direction:row;flex-wrap:wrap;align-items:center;}
+  .resistance-grid,.gov-grid{grid-template-columns:1fr;}
+  footer{padding:24px;}
+  .closing-cta{padding:36px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">Galax<span>sys</span></div>
+    <div class="nav-brand-sub">AI Strategy 2026</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#vision"><span class="nav-num">01</span> Vision & Mandate</a></li>
+    <li><a href="#phases"><span class="nav-num">02</span> 5-Phase Roadmap</a></li>
+    <li><a href="#tools"><span class="nav-num">03</span> AI Tool Stack</a></li>
+    <li><a href="#resistance"><span class="nav-num">04</span> Change Management</a></li>
+    <li><a href="#governance"><span class="nav-num">05</span> Governance & KPIs</a></li>
+    <li><a href="#closing"><span class="nav-num">06</span> The Bottom Line</a></li>
+  </ul>
+  <div class="nav-footer">Galaxsys Leadership<br>Confidential — Internal<br>All Departments</div>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Galaxsys · Internal Strategic Document · Confidential</div>
+    <h1>The <em>AI-First</em><br>Company Mandate</h1>
+    <p class="hero-desc">Our shared strategy for embedding AI into every function of Galaxsys — built together, owned by every team, from game design to commercial operations. This is not a pilot. This is how we work now.</p>
+    <div class="hero-meta">
+      <div class="meta-pill">🤝 <span>Driven by</span> All Departments</div>
+      <div class="meta-pill">🏢 <span>Scope</span> Company-Wide</div>
+      <div class="meta-pill">📋 <span>Type</span> Transformation Roadmap</div>
+      <div class="meta-pill">⏱ <span>Horizon</span> 90-Day Launch</div>
+    </div>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi-cell"><div class="kpi-num">3×</div><div class="kpi-label">Expected output velocity per contributor</div></div>
+    <div class="kpi-cell"><div class="kpi-num">40%</div><div class="kpi-label">Target reduction in game production cycle</div></div>
+    <div class="kpi-cell"><div class="kpi-num">100%</div><div class="kpi-label">Team members required to adopt by Phase 3</div></div>
+    <div class="kpi-cell"><div class="kpi-num">90d</div><div class="kpi-label">Time to full operational AI integration</div></div>
+  </div>
+
+  <!-- 01 VISION -->
+  <section class="page-section" id="vision">
+    <div class="section-header">
+      <div class="section-badge">01 · VISION</div>
+      <div class="section-title-group">
+        <h2>Why This Is Not Optional</h2>
+        <p>The iGaming industry is moving faster than at any point in its history. Game cycles are compressing. Player expectations are rising. Competitors are already deploying AI across their pipelines. This document defines Galaxsys's response — not as an experiment, but as a company-wide operating standard.</p>
+      </div>
+    </div>
+    <div class="mandate-quote">
+      <blockquote>"At Galaxsys, AI is not a feature we add. It is the way we work. Every team, every role, every deliverable will be produced with AI as a core instrument. There is no competitive future in which this is optional."</blockquote>
+      <cite>— GALAXSYS · SHARED COMMITMENT · ALL TEAMS</cite>
+    </div>
+    <p style="color:var(--ink2);font-size:15px;max-width:760px;line-height:1.8;">
+      This is not about replacing people. It is about multiplying them. A designer using AI does the work of three. A developer using AI ships twice as fast with half the bugs. A product owner using AI sees patterns no human can see alone. We all benefit — and we all own this together.
+    </p>
+  </section>
+
+  <!-- 02 PHASES -->
+  <section class="page-section" id="phases">
+    <div class="section-header">
+      <div class="section-badge">02 · ROADMAP</div>
+      <div class="section-title-group">
+        <h2>The 5-Phase Transformation Roadmap</h2>
+        <p>Each phase builds the conditions for the next — organizational, cultural, and technical. Transformation of this magnitude cannot be announced and wished into existence. It must be engineered.</p>
+      </div>
+    </div>
+    <div class="phases">
+
+      <div class="phase-card">
+        <div class="phase-sidebar">
+          <div class="phase-num-bubble">1</div>
+          <div class="phase-timing">Weeks 1–2</div>
+          <div class="phase-owner">Owner: Leadership Team + Dept Heads</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Leadership Alignment & Mandate Lock</div>
+          <div class="phase-desc">Nothing succeeds without unified leadership. Every department head must publicly and privately align with the mandate before it reaches their teams. Silence from leadership is resistance by proxy.</div>
+          <ul class="phase-steps">
+            <li><div class="step-dot">1</div><span>Leadership team presents the AI mandate at an executive session with full business case — cost, speed, and competitive risk</span></li>
+            <li><div class="step-dot">2</div><span>Each department head signs an AI Transformation Commitment — formal internal agreement to champion, not merely permit, adoption</span></li>
+            <li><div class="step-dot">3</div><span>Assign an AI Champion per department: a senior individual contributor energized about AI who serves as internal advocate and troubleshooter</span></li>
+            <li><div class="step-dot">4</div><span>Establish an AI Steering Committee meeting weekly during the 90-day launch window — AI Champions, Dept Heads, and Project Manager team lead</span></li>
+            <li><div class="step-dot">5</div><span>Define the non-negotiable: any new project kickoff after Day 30 must include a declared AI toolset in its brief</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-sidebar">
+          <div class="phase-num-bubble">2</div>
+          <div class="phase-timing">Weeks 2–4</div>
+          <div class="phase-owner">Owner: AI Champions + Team Leads</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Discovery Sprint — Tools Audit Per Team</div>
+          <div class="phase-desc">The company should not dictate every tool top-down. Empower each team to own part of the discovery. People adopt tools they helped choose — this creates investment and reduces resistance significantly.</div>
+          <ul class="phase-steps">
+            <li><div class="step-dot">1</div><span>Each team runs a 3-session AI Discovery Sprint: map workflows → identify AI leverage points → research and propose tools</span></li>
+            <li><div class="step-dot">2</div><span>Every team member submits their individual "AI Tool Proposal" — 3 tools for their specific role with a one-paragraph rationale each</span></li>
+            <li><div class="step-dot">3</div><span>AI Champions consolidate proposals into a Master Tools Matrix per department</span></li>
+            <li><div class="step-dot">4</div><span>Steering Committee approves the final Company AI Stack — Tier 1 (mandatory for all) and Tier 2 (role-specific)</span></li>
+            <li><div class="step-dot">5</div><span>Procurement initiates licensing for all approved tools within 5 business days of approval</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-sidebar">
+          <div class="phase-num-bubble">3</div>
+          <div class="phase-timing">Weeks 4–8</div>
+          <div class="phase-owner">Owner: AI Champions + Optional Trainer</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Structured Onboarding — Learning by Doing</div>
+          <div class="phase-desc">Training that is theoretical fails. Every session at Galaxsys must be applied directly to real work. Teams learn AI by completing their actual tasks with it — no passive observation allowed.</div>
+          <ul class="phase-steps">
+            <li><div class="step-dot">1</div><span>Week 1: 2-hour hands-on workshop per department — every person completes one real task using their new AI tools</span></li>
+            <li><div class="step-dot">2</div><span>Assign "AI Pairing" — each team member paired with a peer for 2 weeks to share discoveries, prompts, and workflows daily</span></li>
+            <li><div class="step-dot">3</div><span>Create a dedicated <strong>Galaxsys AI Wins</strong> channel in Microsoft Teams where everyone posts daily examples of AI-completed tasks — celebrate output, not effort</span></li>
+            <li><div class="step-dot">4</div><span>Weekly 30-minute "AI Show & Tell" per department — one person demos how they used AI that week to normalize and accelerate peer learning</span></li>
+            <li><div class="step-dot">5</div><span>For struggling employees: 1:1 coaching session with AI Champion — supportive, never disciplinary</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-sidebar">
+          <div class="phase-num-bubble">4</div>
+          <div class="phase-timing">Weeks 7–11</div>
+          <div class="phase-owner">Owner: Dept Heads + Project Managers</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Integration into Process — AI Becomes Standard</div>
+          <div class="phase-desc">Adoption is complete when not using AI becomes the exception that requires explanation. This phase formally embeds AI into every workflow gate — templates, retrospectives, OKRs.</div>
+          <ul class="phase-steps">
+            <li><div class="step-dot">1</div><span>Update all project templates, briefs, and delivery checklists to include a mandatory "AI Tools Used" field on every deliverable</span></li>
+            <li><div class="step-dot">2</div><span>Require AI tool usage discussion in sprint retrospectives and design critiques as a standing agenda item</span></li>
+            <li><div class="step-dot">3</div><span>Establish AI Usage Benchmarks per role — minimum expectations for how often AI is integrated in daily deliverables</span></li>
+            <li><div class="step-dot">4</div><span>Introduce AI productivity metrics into OKRs and performance reviews — as a growth indicator, not a punishment</span></li>
+            <li><div class="step-dot">5</div><span>PMs add an "AI Efficiency Review" to each project post-mortem: what was faster, what was learned, what changes next time</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-sidebar">
+          <div class="phase-num-bubble">5</div>
+          <div class="phase-timing">Week 11–12 + Ongoing</div>
+          <div class="phase-owner">Owner: All Team Leads</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Accountability, Iteration & Cultural Lock-In</div>
+          <div class="phase-desc">Transformation stalls when attention moves on. This phase ensures AI usage becomes self-sustaining — embedded in how Galaxsys hires, evaluates, and promotes its people permanently.</div>
+          <ul class="phase-steps">
+            <li><div class="step-dot">1</div><span>90-day company-wide AI Audit: measure output velocity, cycle time, and AI integration depth per department — publish results internally</span></li>
+            <li><div class="step-dot">2</div><span>Update all job descriptions to include AI proficiency as a hard requirement — not a preference or nice-to-have</span></li>
+            <li><div class="step-dot">3</div><span>Add AI tool competency to the performance review framework for all roles across all seniority levels</span></li>
+            <li><div class="step-dot">4</div><span>Quarterly AI Stack Review — every 3 months, teams propose upgrades, deprecations, and new tool additions</span></li>
+            <li><div class="step-dot">5</div><span>Launch the Galaxsys AI Awards — quarterly recognition for the most impactful AI-driven innovation from any team or individual</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 03 TOOLS -->
+  <section class="page-section" id="tools">
+    <div class="section-header">
+      <div class="section-badge">03 · TOOL STACK</div>
+      <div class="section-title-group">
+        <h2>Recommended AI Tools by Department</h2>
+        <p>A starting-point matrix for each team's discovery sprint. Current best-in-class tools for iGaming production. Each team validates and extends this list during Phase 2.</p>
+      </div>
+    </div>
+    <div class="tools-grid">
+
+      <div class="tool-card design">
+        <div class="tool-card-header"><div class="tool-icon">🎨</div><div class="tool-dept-name">UX / UI Designers</div><div class="tool-dept-tag">Design</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">Figma AI</span><span class="tool-item-desc">layout generation, auto-fill</span></div>
+          <div class="tool-item"><span class="tool-item-name">Uizard</span><span class="tool-item-desc">wireframe from prompt</span></div>
+          <div class="tool-item"><span class="tool-item-name">Galileo AI</span><span class="tool-item-desc">UI generation from description</span></div>
+          <div class="tool-item"><span class="tool-item-name">Magician (Figma)</span><span class="tool-item-desc">copy, icons, content</span></div>
+          <div class="tool-item"><span class="tool-item-name">Relume</span><span class="tool-item-desc">sitemap & wireframe AI</span></div>
+          <div class="tool-item"><span class="tool-item-name">Claude / ChatGPT</span><span class="tool-item-desc">UX writing, user flows</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card design">
+        <div class="tool-card-header"><div class="tool-icon">🖌️</div><div class="tool-dept-name">Illustrators & Graphic</div><div class="tool-dept-tag">Design</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">Midjourney</span><span class="tool-item-desc">concept art, character design</span></div>
+          <div class="tool-item"><span class="tool-item-name">Adobe Firefly</span><span class="tool-item-desc">vector gen, generative fill</span></div>
+          <div class="tool-item"><span class="tool-item-name">Stable Diffusion</span><span class="tool-item-desc">custom fine-tuned models</span></div>
+          <div class="tool-item"><span class="tool-item-name">DALL·E 3</span><span class="tool-item-desc">rapid ideation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Krea AI</span><span class="tool-item-desc">real-time image generation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Recraft</span><span class="tool-item-desc">brand-consistent vector art</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card design">
+        <div class="tool-card-header"><div class="tool-icon">🎬</div><div class="tool-dept-name">Animators</div><div class="tool-dept-tag">Design</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">Rive AI</span><span class="tool-item-desc">interactive game animation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Runway ML</span><span class="tool-item-desc">video & motion generation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Cascadeur</span><span class="tool-item-desc">AI physics-based animation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Adobe Animate AI</span><span class="tool-item-desc">auto inbetweening</span></div>
+          <div class="tool-item"><span class="tool-item-name">LeiaPix</span><span class="tool-item-desc">2D to depth/parallax</span></div>
+          <div class="tool-item"><span class="tool-item-name">Kaiber</span><span class="tool-item-desc">motion from static assets</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card tech">
+        <div class="tool-card-header"><div class="tool-icon">⚡</div><div class="tool-dept-name">Frontend Developers</div><div class="tool-dept-tag">Tech</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">GitHub Copilot</span><span class="tool-item-desc">inline code completion</span></div>
+          <div class="tool-item"><span class="tool-item-name">Cursor</span><span class="tool-item-desc">AI-native code editor</span></div>
+          <div class="tool-item"><span class="tool-item-name">v0 by Vercel</span><span class="tool-item-desc">UI component generation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Claude</span><span class="tool-item-desc">architecture, debugging, review</span></div>
+          <div class="tool-item"><span class="tool-item-name">Tabnine</span><span class="tool-item-desc">codebase-aware completion</span></div>
+          <div class="tool-item"><span class="tool-item-name">Codeium</span><span class="tool-item-desc">free AI coding assistant</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card tech">
+        <div class="tool-card-header"><div class="tool-icon">🔧</div><div class="tool-dept-name">Backend Developers</div><div class="tool-dept-tag">Tech</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">GitHub Copilot</span><span class="tool-item-desc">logic, APIs, boilerplate</span></div>
+          <div class="tool-item"><span class="tool-item-name">Cursor</span><span class="tool-item-desc">multi-file refactoring</span></div>
+          <div class="tool-item"><span class="tool-item-name">Claude</span><span class="tool-item-desc">architecture, security review</span></div>
+          <div class="tool-item"><span class="tool-item-name">Warp Terminal</span><span class="tool-item-desc">AI-powered terminal</span></div>
+          <div class="tool-item"><span class="tool-item-name">Swimm</span><span class="tool-item-desc">AI code documentation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Snyk AI</span><span class="tool-item-desc">AI vulnerability detection</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card product">
+        <div class="tool-card-header"><div class="tool-icon">📋</div><div class="tool-dept-name">Product Owners</div><div class="tool-dept-tag">Product</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">Claude / ChatGPT</span><span class="tool-item-desc">PRD generation, specs</span></div>
+          <div class="tool-item"><span class="tool-item-name">Notion AI</span><span class="tool-item-desc">roadmap docs, summaries</span></div>
+          <div class="tool-item"><span class="tool-item-name">Productboard AI</span><span class="tool-item-desc">insight clustering</span></div>
+          <div class="tool-item"><span class="tool-item-name">Maze AI</span><span class="tool-item-desc">research synthesis</span></div>
+          <div class="tool-item"><span class="tool-item-name">Sprig</span><span class="tool-item-desc">automated user insight</span></div>
+          <div class="tool-item"><span class="tool-item-name">Dovetail</span><span class="tool-item-desc">qualitative research AI</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card product">
+        <div class="tool-card-header"><div class="tool-icon">📊</div><div class="tool-dept-name">Project Managers</div><div class="tool-dept-tag">Product</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">Linear AI</span><span class="tool-item-desc">issue triage, summaries</span></div>
+          <div class="tool-item"><span class="tool-item-name">Notion AI</span><span class="tool-item-desc">meeting notes, action items</span></div>
+          <div class="tool-item"><span class="tool-item-name">ClickUp AI</span><span class="tool-item-desc">task generation from brief</span></div>
+          <div class="tool-item"><span class="tool-item-name">Fireflies.ai</span><span class="tool-item-desc">transcription & tasks</span></div>
+          <div class="tool-item"><span class="tool-item-name">Asana Intelligence</span><span class="tool-item-desc">workload analysis</span></div>
+          <div class="tool-item"><span class="tool-item-name">Motion</span><span class="tool-item-desc">AI calendar scheduling</span></div>
+        </div>
+      </div>
+
+      <div class="tool-card commercial">
+        <div class="tool-card-header"><div class="tool-icon">💼</div><div class="tool-dept-name">Commercial Team</div><div class="tool-dept-tag">Commercial</div></div>
+        <div class="tool-list-body">
+          <div class="tool-item"><span class="tool-item-name">HubSpot AI</span><span class="tool-item-desc">CRM, outreach, forecasting</span></div>
+          <div class="tool-item"><span class="tool-item-name">Apollo AI</span><span class="tool-item-desc">lead research & scoring</span></div>
+          <div class="tool-item"><span class="tool-item-name">Lavender</span><span class="tool-item-desc">AI email optimization</span></div>
+          <div class="tool-item"><span class="tool-item-name">Gamma</span><span class="tool-item-desc">AI pitch deck generation</span></div>
+          <div class="tool-item"><span class="tool-item-name">Gong</span><span class="tool-item-desc">call analysis & coaching</span></div>
+          <div class="tool-item"><span class="tool-item-name">Clay</span><span class="tool-item-desc">enriched outbound automation</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="callout">
+      <strong>Procurement Note:</strong> Negotiate team licenses rather than individual seats wherever possible. For Midjourney, Cursor, and GitHub Copilot, team pricing delivers significant savings at scale. The AI Steering Committee must review all licensing terms for IP and data privacy — particularly for generative image and code tools used in commercial game production.
+    </div>
+  </section>
+
+  <!-- 04 RESISTANCE -->
+  <section class="page-section" id="resistance">
+    <div class="section-header">
+      <div class="section-badge">04 · CHANGE MANAGEMENT</div>
+      <div class="section-title-group">
+        <h2>Handling Resistance — Reframes That Work</h2>
+        <p>Resistance is predictable. It is not a sign of failure — it is a sign of transformation in progress. Below are the most common objections and the leadership responses that move people forward.</p>
+      </div>
+    </div>
+    <div class="resistance-grid">
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "AI will replace my job."</div>
+        <div class="resistance-reframe">The risk is not AI replacing you — it is <strong>a colleague using AI</strong> outperforming you. AI is a force multiplier for skilled people. Your expertise is what makes the output useful. Without your judgment, the tool produces noise.</div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "The output quality isn't good enough."</div>
+        <div class="resistance-reframe">AI output quality <strong>is directly proportional to the skill of the person using it.</strong> Poor prompts produce poor output. Your job is to become an expert at directing AI — a skill this company will invest in teaching you.</div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "I don't have time to learn new tools."</div>
+        <div class="resistance-reframe">You don't have time <strong>not to.</strong> Every week without these tools, a competitor closes the gap. Learning takes 2–3 weeks of real use. After that, you save more time than you spent learning. The math is simple.</div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "My creative work can't be done by AI."</div>
+        <div class="resistance-reframe">AI does not replace your creative vision. It removes the friction between your vision and execution. <strong>The best creatives in the world are already using AI</strong> to ideate faster, explore more, and produce more original work.</div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "I'm worried about data security."</div>
+        <div class="resistance-reframe">Valid — and taken seriously. <strong>The Steering Committee reviewed all approved tools for data handling.</strong> Any tool in our stack has cleared baseline security. Never input proprietary game IP into unapproved tools. Clear, enforced policy.</div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-objection">OBJECTION: "This feels forced."</div>
+        <div class="resistance-reframe">It is. So was learning Figma instead of drawing on paper. So was switching to Jira. Every foundational tool shift feels forced at first — and then <strong>you can't imagine working without it.</strong> We are not apologizing for moving forward.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 05 GOVERNANCE -->
+  <section class="page-section" id="governance">
+    <div class="section-header">
+      <div class="section-badge">05 · GOVERNANCE</div>
+      <div class="section-title-group">
+        <h2>How We Measure This</h2>
+        <p>What is not measured is not managed. The following framework ensures AI transformation is tracked and accountable — at company, department, and individual level.</p>
+      </div>
+    </div>
+    <div class="gov-grid">
+
+      <div class="gov-card">
+        <div class="gov-card-header">🏢 COMPANY LEVEL <span class="gov-freq">QUARTERLY</span></div>
+        <ul>
+          <li>Game production cycle time vs. pre-AI baseline</li>
+          <li>Number of game concepts explored per sprint</li>
+          <li>Bug rate: pre- vs. post-AI code review</li>
+          <li>Revenue per FTE vs. industry benchmark</li>
+          <li>AI tool adoption rate across all departments</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-header">🏬 DEPARTMENT LEVEL <span class="gov-freq">MONTHLY</span></div>
+        <ul>
+          <li>% of deliverables with AI tools declared</li>
+          <li>AI tool utilization rate (active sessions)</li>
+          <li>Time saved per workflow type (estimated)</li>
+          <li>New AI use cases discovered per team</li>
+          <li>Training completion across department</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-header">👤 INDIVIDUAL LEVEL <span class="gov-freq">PERF. REVIEWS</span></div>
+        <ul>
+          <li>AI tools actively used (breadth & depth)</li>
+          <li>Contributions to #ai-wins channel</li>
+          <li>Novel workflows shared with team</li>
+          <li>Output velocity trajectory over time</li>
+          <li>AI competency self-assessment, calibrated by manager</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-header">⚙️ STEERING COMMITTEE <span class="gov-freq">WEEKLY · 90 DAYS</span></div>
+        <ul>
+          <li>Adoption blockers surfaced and resolved</li>
+          <li>Tool issues or licensing problems escalated</li>
+          <li>Resistance patterns identified and addressed</li>
+          <li>Quick wins documented and shared company-wide</li>
+          <li>Budget and procurement status review</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 06 CLOSING -->
+  <section class="page-section" id="closing" style="border-bottom:none;">
+    <div class="section-header">
+      <div class="section-badge">06 · THE BOTTOM LINE</div>
+      <div class="section-title-group">
+        <h2>What This Builds</h2>
+        <p>In 12 months, Galaxsys will either be a company that moved first — or one that explains why it didn't. The iGaming industry is consolidating around providers who can produce more, faster, without inflating headcount. AI is the instrument we use to get there.</p>
+      </div>
+    </div>
+    <p style="color:var(--ink2);font-size:15px;max-width:760px;line-height:1.8;margin-bottom:32px;">
+      This transformation will be uncomfortable at first — and that discomfort is the growing pain of a company becoming something better. We chose to move. We planned for the hard parts. And we will not be stopped by them.
+    </p>
+    <div class="closing-cta">
+      <blockquote>The teams that master AI in the next 90 days will define what Galaxsys is capable of for the next decade. This is the moment. We move now.</blockquote>
+      <cite>— GALAXSYS · EVERY TEAM · EVERY ROLE · WE MOVE TOGETHER</cite>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">Galax<span>sys</span></div>
+    <div class="footer-note">AI Transformation Strategy · A Galaxsys Company Initiative · Confidential — Internal</div>
+  </footer>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
